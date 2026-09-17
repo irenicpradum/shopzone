@@ -9,14 +9,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('is_admin')->default(0)->after('email'); // 0 = Normal User, 1 = Admin
+            // Check agar column pehle se nahi hai tabhi add kare
+            if (!Schema::hasColumn('users', 'is_admin')) {
+                $table->boolean('is_admin')->default(0)->after('email');
+            }
         });
     }
 
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('is_admin');
+            if (Schema::hasColumn('users', 'is_admin')) {
+                $table->dropColumn('is_admin');
+            }
         });
     }
 };
