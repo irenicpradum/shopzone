@@ -9,6 +9,9 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip
 
+# Yeh line add karni hai MySQL driver ke liye
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
